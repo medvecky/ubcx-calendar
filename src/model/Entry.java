@@ -2,7 +2,7 @@ package model;
 
 public abstract class Entry {
     private MyDate date;
-    private MyDate time;
+    private MyTime time;
     private String label;
     private boolean isRepeating;
     private IntervalOfRepetition intervalOfRepetition;
@@ -10,7 +10,7 @@ public abstract class Entry {
     // REQUIRES: Date and/or time must be in thr future
     // MODIFIES: this
     // EFFECTS: creates new Entry object
-    public Entry(MyDate date, MyDate time, String label) {
+    public Entry(MyDate date, MyTime time, String label) {
         this.date = date;
         this.time = time;
         this.label = label;
@@ -22,7 +22,7 @@ public abstract class Entry {
         return date;
     }
 
-    public MyDate getTime() {
+    public MyTime getTime() {
         return time;
     }
 

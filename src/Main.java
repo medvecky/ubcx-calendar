@@ -1,6 +1,8 @@
 import model.MyDate;
 import model.MyTime;
 
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         MyDate date = new MyDate(1,1,2019);

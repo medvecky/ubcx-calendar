@@ -7,12 +7,12 @@ public class Meeting extends Event {
 
     private List<String> attendees;
 
-    public Meeting(MyDate date, MyDate time, String label) {
+    public Meeting(MyDate date, MyTime time, String label) {
         super(date, time, label);
         attendees = new ArrayList<>();
     }
 
-    public Meeting(MyDate date, MyDate time, String label, Reminder reminder) {
+    public Meeting(MyDate date, MyTime time, String label, Reminder reminder) {
         super(date, time, label, reminder);
         attendees = new ArrayList<>();
     }

@@ -2,11 +2,11 @@ package model;
 
 public class Reminder extends Entry {
     private String note;
-    public Reminder(MyDate date, MyDate time, String label) {
+    public Reminder(MyDate date, MyTime time, String label) {
         super(date, time, label);
     }
 
-    public Reminder(MyDate date, MyDate time, String label, String note) {
+    public Reminder(MyDate date, MyTime time, String label, String note) {
         super(date, time, label);
         this.note = note;
     }

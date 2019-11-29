@@ -1,36 +1,37 @@
 package model;
 
 public class IntervalOfRepetition {
-    private MyDate date;
-    private MyTime time;
+   private int days;
+   private int months;
+   private int years;
 
-    public IntervalOfRepetition(MyDate date) {
-        this.date = date;
-        this.time = null;
+    public IntervalOfRepetition(int days, int months, int years) {
+        this.days = days;
+        this.months = months;
+        this.years = years;
     }
 
-    public IntervalOfRepetition(MyTime time) {
-        this.time = time;
-        this.date = null;
-    }
-    public IntervalOfRepetition(MyDate date, MyTime time) {
-        this.date = date;
-        this.time = time;
+    public int getDays() {
+        return days;
     }
 
-    public MyDate getDate() {
-        return date;
+    public void setDays(int days) {
+        this.days = days;
     }
 
-    public void setDate(MyDate date) {
-        this.date = date;
+    public int getMonths() {
+        return months;
     }
 
-    public MyTime getTime() {
-        return time;
+    public void setMonths(int months) {
+        this.months = months;
     }
 
-    public void setTime(MyTime time) {
-        this.time = time;
+    public int getYears() {
+        return years;
+    }
+
+    public void setYears(int years) {
+        this.years = years;
     }
 }

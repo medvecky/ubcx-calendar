@@ -4,12 +4,12 @@ public class Event extends Entry {
 
     private Reminder reminder;
 
-    public Event(MyDate date, MyDate time, String label) {
+    public Event(MyDate date, MyTime time, String label) {
         super(date, time, label);
         this.reminder = null;
     }
 
-    public Event(MyDate date, MyDate time, String label, Reminder reminder) {
+    public Event(MyDate date, MyTime time, String label, Reminder reminder) {
         super(date, time, label);
         this.reminder = reminder;
     }
