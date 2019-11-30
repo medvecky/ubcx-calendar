@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MyCalendar {
     private MyDate currentDate;
@@ -21,7 +22,9 @@ public class MyCalendar {
 
     private Optional<Integer> getEntryPosition(Entry entry) {
         Optional<Entry> optionalEntry = entries.stream()
-                .filter(e -> (e.getLabel().equals(entry.getLabel()) && e.getDate().equals(entry.getDate())))
+                .filter(e ->
+                        (e.getTime().getTime().equals(entry.getTime().getTime()) &&
+                                e.getDate().getShortDate().equals(entry.getDate().getShortDate())))
                 .findFirst();
         return optionalEntry.map(value -> entries.indexOf(value));
     }
@@ -47,23 +50,45 @@ public class MyCalendar {
     }
 
     public void addEntry(Entry entry) {
-       if(!entries.contains(entry)) {
-           entries.add(entry);
-       }
+        if (!entries.contains(entry)) {
+            entries.add(entry);
+        }
     }
 
     public void removeEntry(Entry entry) {
-        if(entries.contains(entry)) {
+        if (entries.contains(entry)) {
             entries.remove(entry);
         }
     }
 
     public void updateEntry(Entry oldEntry, Entry newEntry) {
         Optional<Integer> entryPosition = getEntryPosition(oldEntry);
-        if(entryPosition.isPresent()) {
-            entries.set(entryPosition.get(), newEntry);
+        if (entryPosition.isPresent()) {
+            updateEntry(entryPosition.get(), newEntry);
         } else {
             entries.add(newEntry);
         }
+    }
+
+    public void updateEntry(int entryPosition, Entry newEntry) {
+       entries.set(entryPosition, newEntry);
+    }
+
+    public List<Entry> getEvents(List<Entry> entries) {
+        return entries.stream()
+                .filter(entry -> entry.getClass().equals(Event.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> getMeetings(List<Entry> entries) {
+        return entries.stream()
+                .filter(entry -> entry.getClass().equals(Meeting.class))
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> getReminders(List<Entry> entries) {
+        return entries.stream()
+                .filter(entry -> entry.getClass().equals(Reminder.class))
+                .collect(Collectors.toList());
     }
 }
