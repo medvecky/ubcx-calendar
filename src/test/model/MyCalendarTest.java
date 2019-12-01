@@ -337,4 +337,206 @@ class MyCalendarTest {
         assertEquals("Entry Reminder 2", foundEvents.get(0).getLabel());
         assertEquals("Entry Reminder 4", foundEvents.get(1).getLabel());
     }
+
+    @Test
+    void filterByYearEmpty() {
+
+        Entry entry1 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        assertEquals(0, testCalendar.filterByYear(testCalendar.getEntries(),2031).size());
+    }
+
+    @Test
+    void filterByYearOne() {
+
+        Entry entry1 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 2, 2031),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry3 = new Meeting(
+                new MyDate(3, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 3");
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        testCalendar.addEntry(entry3);
+        List<Entry> foundEntries = testCalendar.filterByYear(testCalendar.getEntries(), 2031);
+        assertEquals(1, foundEntries.size());
+        assertEquals("Entry Meeting 2", foundEntries.get(0).getLabel());
+    }
+
+    @Test
+    void filterByYearFew() {
+
+        Entry entry1 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 2, 2031),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry3 = new Meeting(
+                new MyDate(3, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 3");
+        Entry entry4 = new Meeting(
+                new MyDate(4, 2, 2031),
+                new MyTime(21, 15),
+                "Entry Meeting 4");
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        testCalendar.addEntry(entry3);
+        testCalendar.addEntry(entry4);
+        List<Entry> foundEntries = testCalendar.filterByYear(testCalendar.getEntries(), 2031);
+        assertEquals(2, foundEntries.size());
+        assertEquals("Entry Meeting 2", foundEntries.get(0).getLabel());
+        assertEquals("Entry Meeting 4", foundEntries.get(1).getLabel());
+    }
+
+    @Test
+    void filterByMonthEmpty() {
+        Entry entry1 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        assertEquals(0, testCalendar.filterByMonth(testCalendar.getEntries(),3).size());
+    }
+
+    @Test
+    void filterByMonthOne() {
+        Entry entry1 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 3, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry3 = new Meeting(
+                new MyDate(3, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 3");
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        testCalendar.addEntry(entry3);
+        List<Entry> foundEntry = testCalendar.filterByMonth(testCalendar.getEntries(), 3);
+        assertEquals(1, foundEntry.size());
+        assertEquals("Entry Meeting 2", foundEntry.get(0).getLabel());
+    }
+
+    @Test
+    void filterByMonthFew() {
+        Entry entry1 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 3, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry3 = new Meeting(
+                new MyDate(3, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 3");
+        Entry entry4 = new Meeting(
+                new MyDate(4, 3, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 4");
+
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        testCalendar.addEntry(entry3);
+        testCalendar.addEntry(entry4);
+        List<Entry> foundEntry = testCalendar.filterByMonth(testCalendar.getEntries(), 3);
+        assertEquals(2, foundEntry.size());
+        assertEquals("Entry Meeting 2", foundEntry.get(0).getLabel());
+        assertEquals("Entry Meeting 4", foundEntry.get(1).getLabel());
+    }
+
+    @Test
+    void filterByDayEmpty() {
+        Entry entry1 = new Meeting(
+                new MyDate(1, 1, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(1, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        assertEquals(0, testCalendar.filterByDay(testCalendar.getEntries(),2).size());
+    }
+
+    @Test
+    void filterByDayOne() {
+        Entry entry1 = new Meeting(
+                new MyDate(1, 1, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry3 = new Meeting(
+                new MyDate(1, 3, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        testCalendar.addEntry(entry3);
+        List<Entry> foundEntries = testCalendar.filterByDay(testCalendar.getEntries(), 2);
+        assertEquals(1, foundEntries.size());
+        assertEquals("Entry Meeting 2", foundEntries.get(0).getLabel());
+    }
+
+    @Test
+    void filterByDayFew() {
+        Entry entry1 = new Meeting(
+                new MyDate(1, 1, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 1");
+        Entry entry2 = new Meeting(
+                new MyDate(2, 2, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry3 = new Meeting(
+                new MyDate(3, 3, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 2");
+        Entry entry4 = new Meeting(
+                new MyDate(2, 4, 2030),
+                new MyTime(21, 15),
+                "Entry Meeting 4");
+
+
+        testCalendar.addEntry(entry1);
+        testCalendar.addEntry(entry2);
+        testCalendar.addEntry(entry3);
+        testCalendar.addEntry(entry4);
+        List<Entry> foundEntries = testCalendar.filterByDay(testCalendar.getEntries(), 2);
+        assertEquals(2, foundEntries.size());
+        assertEquals("Entry Meeting 2", foundEntries.get(0).getLabel());
+        assertEquals("Entry Meeting 4", foundEntries.get(1).getLabel());
+    }
 }

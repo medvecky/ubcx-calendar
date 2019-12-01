@@ -91,4 +91,22 @@ public class MyCalendar {
                 .filter(entry -> entry.getClass().equals(Reminder.class))
                 .collect(Collectors.toList());
     }
+
+    public List<Entry> filterByYear(List<Entry> entries, int year) {
+        return entries.stream()
+                .filter(entry -> entry.getDate().getYear() == year)
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> filterByMonth(List<Entry> entries, int month) {
+        return entries.stream()
+                .filter(entry -> entry.getDate().getMonth() == month)
+                .collect(Collectors.toList());
+    }
+
+    public List<Entry> filterByDay(List<Entry> entries, int day) {
+        return entries.stream()
+                .filter(entry -> entry.getDate().getDay() == day)
+                .collect(Collectors.toList());
+    }
 }

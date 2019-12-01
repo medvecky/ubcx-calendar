@@ -1,8 +1,10 @@
 package model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class MyDate {
     private Date date;
@@ -24,5 +26,23 @@ public class MyDate {
     public String getLongDate() {
         SimpleDateFormat format = new SimpleDateFormat("EEEEE MMMMM dd, yyyy");
         return format.format(date);
+    }
+
+    public int getYear() {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Riga"));
+        cal.setTime(date);
+        return  cal.get(Calendar.YEAR);
+    }
+
+    public int getMonth() {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Riga"));
+        cal.setTime(date);
+        return  cal.get(Calendar.MONTH) + 1;
+    }
+
+    public int getDay() {
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Riga"));
+        cal.setTime(date);
+        return  cal.get(Calendar.DAY_OF_MONTH);
     }
 }
