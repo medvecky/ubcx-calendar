@@ -1,18 +1,20 @@
 package ui;
 
+import model.MyCalendar;
+
 import java.util.Scanner;
 
 import static ui.CreateEntry.createEntry;
+import static ui.DisplayEntries.displayEntries;
 
 public class MainMenu {
     public static void main(String[] args) {
-        mainMenu();
+        mainMenu(calendarInit());
     }
 
-    public static void mainMenu() {
+    public static void mainMenu(MyCalendar calendar) {
         String choice = null;
         Scanner scanner = new Scanner(System.in);
-
         do {
             System.out.println("\t\t\t\tCALENDAR APP");
             System.out.println();
@@ -23,12 +25,22 @@ public class MainMenu {
 
             switch (choice) {
                 case "1":
-                    createEntry();
+                    createEntry(calendar);
                     break;
                 case "2":
-                    System.out.println("Display entries procedure");
+                    displayEntries(calendar);
                     break;
+                case "q":
+                    break;
+                default:
+                    System.out.println("Invalid options");
             }
-        } while(!choice.equals("q"));
+        } while (!choice.equals("q"));
+    }
+
+    public static MyCalendar calendarInit() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your email to initialize calendar: ");
+        return new MyCalendar(scanner.nextLine());
     }
 }
