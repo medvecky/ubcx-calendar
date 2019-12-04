@@ -27,7 +27,7 @@ public class CreateEntry {
                     System.out.println("Create meeting procedure");
                     break;
                 case "3":
-                    System.out.println("Create reminder procedure");
+                    addReminder(calendar);
                     break;
                 case "r":
                     break;
@@ -40,14 +40,38 @@ public class CreateEntry {
     public static void createEvent(MyCalendar calendar) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Create event procedure...");
-        MyDate date =  createDate();
-        MyTime time =  createTime();
-        System.out.println("Enter label text: ");
+        MyDate date = createDate();
+        MyTime time = createTime();
+        System.out.print("Enter label text: ");
         String label = scanner.nextLine();
-        calendar.addEntry(new Event(date, time, label));
+        System.out.print("Add reminder?(y/n): ");
+        if (scanner.nextLine().equals("y")) {
+            calendar.addEntry(new Event(date, time, label, createReminder()));
+        } else {
+            calendar.addEntry(new Event(date, time, label));
+        }
     }
 
-    public static MyDate createDate () {
+    public static Reminder createReminder() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Create reminder procedure...");
+        MyDate date = createDate();
+        MyTime time = createTime();
+        System.out.print("Enter label text: ");
+        String label = scanner.nextLine();
+        System.out.print("Enter note text (press enter for none): ");
+        String note = scanner.nextLine();
+        if (note.equals("")) {
+            return new Reminder(date, time, label);
+        }
+        return new Reminder(date, time, label, note);
+    }
+
+    public static void addReminder(MyCalendar calendar) {
+        calendar.addEntry(createReminder());
+    }
+
+    public static MyDate createDate() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter year: ");
         int year = scanner.nextInt();
@@ -63,8 +87,8 @@ public class CreateEntry {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter hours: ");
         int hours = scanner.nextInt();
-        System.out.println("Enter minutes: ");
-        int minutes =  scanner.nextInt();
+        System.out.print("Enter minutes: ");
+        int minutes = scanner.nextInt();
         return new MyTime(hours, minutes);
     }
 }
