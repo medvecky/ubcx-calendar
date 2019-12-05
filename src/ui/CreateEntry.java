@@ -21,10 +21,10 @@ public class CreateEntry {
 
             switch (choice) {
                 case "1":
-                    createEvent(calendar);
+                    addEvent(calendar);
                     break;
                 case "2":
-                    System.out.println("Create meeting procedure");
+                    addMeeting(calendar);
                     break;
                 case "3":
                     addReminder(calendar);
@@ -37,7 +37,11 @@ public class CreateEntry {
         } while (!choice.equals("r"));
     }
 
-    public static void createEvent(MyCalendar calendar) {
+    public static void addEvent(MyCalendar calendar) {
+        calendar.addEntry(createEvent());
+    }
+
+    public static Event createEvent() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Create event procedure...");
         MyDate date = createDate();
@@ -46,11 +50,12 @@ public class CreateEntry {
         String label = scanner.nextLine();
         System.out.print("Add reminder?(y/n): ");
         if (scanner.nextLine().equals("y")) {
-            calendar.addEntry(new Event(date, time, label, createReminder()));
+            return new Event(date, time, label, createReminder());
         } else {
-            calendar.addEntry(new Event(date, time, label));
+            return new Event(date, time, label);
         }
     }
+
 
     public static Reminder createReminder() {
         Scanner scanner = new Scanner(System.in);
@@ -69,6 +74,33 @@ public class CreateEntry {
 
     public static void addReminder(MyCalendar calendar) {
         calendar.addEntry(createReminder());
+    }
+
+    public static void addMeeting(MyCalendar calendar) {
+        calendar.addEntry(createMeeting());
+    }
+
+    public static Meeting createMeeting() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Create Meeting procedure...");
+        MyDate date = createDate();
+        MyTime time = createTime();
+        System.out.print("Enter label text: ");
+        String label = scanner.nextLine();
+        System.out.print("Add reminder?(y/n): ");
+        Meeting meeting = null;
+        if (scanner.nextLine().equals("y")) {
+            meeting = new Meeting(date, time, label, createReminder());
+        } else {
+            meeting = new Meeting(date, time, label);
+        }
+        System.out.print("Add attendees (just Enter for end): ");
+        String attendee = null;
+        while ((attendee = scanner.nextLine()).length() != 0) {
+            System.out.println("Attendee: " + attendee + " " + attendee.length());
+            meeting.addAttendee(attendee);
+        }
+        return meeting;
     }
 
     public static MyDate createDate() {

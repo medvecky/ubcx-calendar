@@ -1,10 +1,11 @@
 package ui;
 
 import model.*;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.List;
 import java.util.Scanner;
+
+import static ui.UpdateEntry.updateEntry;
 
 public class DisplayEntries {
     public static void displayEntries(MyCalendar calendar) {
@@ -83,6 +84,7 @@ public class DisplayEntries {
                 }
                 System.out.println();
             }
+            updateEntry(calendar, entries);
         } else {
             System.out.println("No events found.");
         }
@@ -103,6 +105,7 @@ public class DisplayEntries {
                 }
                 System.out.println();
             }
+            updateEntry(calendar, entries);
         } else {
             System.out.println("No reminders found.");
         }
@@ -117,12 +120,18 @@ public class DisplayEntries {
                 Meeting meeting = (Meeting) entries.get(i);
                 System.out.print("\t\t" + (i + 1) + ".\t\t");
                 showEntryData(meeting);
+                if (meeting.getReminder() != null) {
+                    System.out.println("\t\t\t\tRemind about:");
+                    System.out.println("\t\t\t\t\t" + meeting.getReminder().getDate().getShortDate());
+                    System.out.println("\t\t\t\t\t" + meeting.getReminder().getNote());
+                }
                 if (meeting.getAttendees().size() > 0) {
-                    System.out.println("\t\t\t\tAttendees");
-                    meeting.getAttendees().forEach(System.out::println);
+                    System.out.println("\t\t\t\tAttendees:");
+                    meeting.getAttendees().forEach(attendee -> System.out.println("\t\t\t\t\t" + attendee));
                 }
                 System.out.println();
             }
+            updateEntry(calendar, entries);
         } else {
             System.out.println("No meetings found.");
         }
