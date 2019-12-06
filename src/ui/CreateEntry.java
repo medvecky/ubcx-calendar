@@ -97,7 +97,6 @@ public class CreateEntry {
         System.out.print("Add attendees (just Enter for end): ");
         String attendee = null;
         while ((attendee = scanner.nextLine()).length() != 0) {
-            System.out.println("Attendee: " + attendee + " " + attendee.length());
             meeting.addAttendee(attendee);
         }
         return meeting;

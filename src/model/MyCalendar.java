@@ -1,9 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MyCalendar {
@@ -15,9 +12,9 @@ public class MyCalendar {
         this.email = email;
         entries = new ArrayList<>();
         currentDate = new MyDate(
-                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
                 Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                Calendar.getInstance().get(Calendar.YEAR));
     }
 
     private Optional<Integer> getEntryPosition(Entry entry) {
@@ -71,7 +68,7 @@ public class MyCalendar {
     }
 
     public void updateEntry(int entryPosition, Entry newEntry) {
-       entries.set(entryPosition, newEntry);
+        entries.set(entryPosition, newEntry);
     }
 
     public List<Entry> getEvents(List<Entry> entries) {

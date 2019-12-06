@@ -5,6 +5,7 @@ import model.*;
 import java.util.List;
 import java.util.Scanner;
 
+import static ui.FilterByDate.filterByDate;
 import static ui.UpdateEntry.updateEntry;
 
 public class DisplayEntries {
@@ -26,7 +27,7 @@ public class DisplayEntries {
                     filterEntriesByType(calendar);
                     break;
                 case "2":
-                    System.out.println("Filter by date procedure...");
+                    filterByDate(calendar);
                     break;
                 case "r":
                     break;
@@ -54,10 +55,10 @@ public class DisplayEntries {
                     showEvents(calendar);
                     break;
                 case "2":
-                    showMeeting(calendar);
+                    showMeetings(calendar);
                     break;
                 case "3":
-                    showReminder(calendar);
+                    showReminders(calendar);
                     break;
                 case "r":
                     break;
@@ -74,14 +75,9 @@ public class DisplayEntries {
 
         if (numberOfEntries > 0) {
             for (int i = 0; i < numberOfEntries; i++) {
-                Event event = (Event) entries.get(i);
                 System.out.print("\t\t" + (i + 1) + ".\t\t");
-                showEntryData(event);
-                if (event.getReminder() != null) {
-                    System.out.println("\t\t\t\tRemind about:");
-                    System.out.println("\t\t\t\t\t" + event.getReminder().getDate().getShortDate());
-                    System.out.println("\t\t\t\t\t" + event.getReminder().getNote());
-                }
+                Event event = (Event) entries.get(i);
+                displayEvent(event);
                 System.out.println();
             }
             updateEntry(calendar, entries);
@@ -90,7 +86,16 @@ public class DisplayEntries {
         }
     }
 
-    public static void showReminder(MyCalendar calendar) {
+    static void displayEvent(Event event) {
+        showEntryData(event);
+        if (event.getReminder() != null) {
+            System.out.println("\t\t\t\tRemind about:");
+            System.out.println("\t\t\t\t\t" + event.getReminder().getDate().getShortDate());
+            System.out.println("\t\t\t\t\t" + event.getReminder().getNote());
+        }
+    }
+
+    public static void showReminders(MyCalendar calendar) {
         List<Entry> entries = calendar.getReminders(calendar.getEntries());
         int numberOfEntries = entries.size();
         System.out.println("\t\t\t\tREMINDERS");
@@ -98,11 +103,7 @@ public class DisplayEntries {
             for (int i = 0; i < numberOfEntries; i++) {
                 System.out.print("\t\t" + (i + 1) + ".\t\t");
                 Reminder reminder = (Reminder) entries.get(i);
-                showEntryData(reminder);
-                if (reminder.getNote() != null) {
-                    System.out.print("\t\t\t\tNote: ");
-                    System.out.println(reminder.getNote());
-                }
+                displayReminder(reminder);
                 System.out.println();
             }
             updateEntry(calendar, entries);
@@ -111,24 +112,23 @@ public class DisplayEntries {
         }
     }
 
-    public static void showMeeting(MyCalendar calendar) {
+    static void displayReminder(Reminder reminder) {
+        showEntryData(reminder);
+        if (reminder.getNote() != null) {
+            System.out.print("\t\t\t\tNote: ");
+            System.out.println(reminder.getNote());
+        }
+    }
+
+    public static void showMeetings(MyCalendar calendar) {
         List<Entry> entries = calendar.getMeetings(calendar.getEntries());
         int numberOfEntries = entries.size();
         System.out.println("\t\t\t\tMEETINGS");
         if (numberOfEntries > 0) {
             for (int i = 0; i < numberOfEntries; i++) {
-                Meeting meeting = (Meeting) entries.get(i);
                 System.out.print("\t\t" + (i + 1) + ".\t\t");
-                showEntryData(meeting);
-                if (meeting.getReminder() != null) {
-                    System.out.println("\t\t\t\tRemind about:");
-                    System.out.println("\t\t\t\t\t" + meeting.getReminder().getDate().getShortDate());
-                    System.out.println("\t\t\t\t\t" + meeting.getReminder().getNote());
-                }
-                if (meeting.getAttendees().size() > 0) {
-                    System.out.println("\t\t\t\tAttendees:");
-                    meeting.getAttendees().forEach(attendee -> System.out.println("\t\t\t\t\t" + attendee));
-                }
+                Meeting meeting = (Meeting) entries.get(i);
+                displayMeeting(meeting);
                 System.out.println();
             }
             updateEntry(calendar, entries);
@@ -137,8 +137,16 @@ public class DisplayEntries {
         }
     }
 
+    static void displayMeeting(Meeting meeting) {
+        displayEvent(meeting);
+        if (meeting.getAttendees().size() > 0) {
+            System.out.println("\t\t\t\tAttendees:");
+            meeting.getAttendees().forEach(attendee -> System.out.println("\t\t\t\t\t" + attendee));
+        }
+    }
+
     static void showEntryData(Entry event) {
-        System.out.println(event.getDate().getShortDate());
+        System.out.println("\t\t\t\t" + event.getDate().getShortDate());
         System.out.println("\t\t\t\t" + event.getTime().getTime());
         System.out.println("\t\t\t\t" + event.getLabel());
         if (event.getIntervalOfRepetition() != null) {

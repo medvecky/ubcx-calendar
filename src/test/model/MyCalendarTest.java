@@ -19,9 +19,9 @@ class MyCalendarTest {
     @Test
     void getCurrentDate() {
         MyDate currentDate = new MyDate(
-                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH),
                 Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+                Calendar.getInstance().get(Calendar.YEAR));
         assertEquals(currentDate.getLongDate(), testCalendar.getCurrentDate().getLongDate());
     }
 
